@@ -40,6 +40,7 @@ template "/etc/init.d/sonar" do
   source "sonar.init.erb"
   owner "root"
   group "root"
+  mode 0744
 end
 
 service "sonar" do
