@@ -36,8 +36,10 @@ link "/opt/sonar" do
   to "/opt/sonar-#{node['sonar']['version']}"
 end
 
-link "/etc/init.d/sonar" do
-  to "/opt/sonar/bin/#{node['sonar']['os_kernel']}/sonar.sh"
+template "/etc/init.d/sonar" do
+  source "sonar.init.erb"
+  owner "root"
+  group "root"
 end
 
 service "sonar" do
