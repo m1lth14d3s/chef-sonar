@@ -21,6 +21,10 @@ include_recipe "java"
 
 package "unzip"
 
+user node['sonar']['user'] do
+  home node['sonar']['home']
+end
+
 remote_file "/opt/sonar-#{node['sonar']['version']}.zip" do
   source "#{node['sonar']['mirror']}/sonar-#{node['sonar']['version']}.zip"
   mode "0644"
@@ -34,6 +38,9 @@ end
 
 link "/opt/sonar" do
   to "/opt/sonar-#{node['sonar']['version']}"
+end
+
+execute "chmod #{node['sonar']['user']} -R #{node['sonar']['home']}" do
 end
 
 template "/etc/init.d/sonar" do
@@ -51,7 +58,7 @@ end
 template "sonar.properties" do
   path "/opt/sonar/conf/sonar.properties"
   source "sonar.properties.erb"
-  owner "root"
+  owner "node['sonar']['user']"
   group "root"
   mode 0644
   variables(
@@ -63,7 +70,7 @@ end
 template "wrapper.conf" do
   path "/opt/sonar/conf/wrapper.conf"
   source "wrapper.conf.erb"
-  owner "root"
+  owner "node['sonar']['user']"
   group "root"
   mode 0644
   notifies :restart, resources(:service => "sonar")
