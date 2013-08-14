@@ -58,7 +58,7 @@ end
 template "sonar.properties" do
   path "/opt/sonar/conf/sonar.properties"
   source "sonar.properties.erb"
-  owner "node['sonar']['user']"
+  owner node['sonar']['user']
   group "root"
   mode 0644
   variables(
@@ -70,7 +70,7 @@ end
 template "wrapper.conf" do
   path "/opt/sonar/conf/wrapper.conf"
   source "wrapper.conf.erb"
-  owner "node['sonar']['user']"
+  owner node['sonar']['user']
   group "root"
   mode 0644
   notifies :restart, resources(:service => "sonar")
