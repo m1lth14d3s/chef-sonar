@@ -39,7 +39,7 @@ Apache configuration is going to vary based on your own application's requiremen
 include_recipe "apache2"
 
 template "sonar_server.conf" do
-  path "#{node[:apache][:dir]}/sites-enabled/"
+  path "#{node[:apache][:dir]}/sites-enabled/sonar_server.conf"
   source "apache_site_#{node['sonar']['web_template']}.erb"
   owner "root"
   group "root"
