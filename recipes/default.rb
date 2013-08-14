@@ -40,7 +40,7 @@ link "/opt/sonar" do
   to "/opt/sonar-#{node['sonar']['version']}"
 end
 
-execute "chmod -R #{node['sonar']['user']} #{node['sonar']['home']}" do
+execute "chown -R #{node['sonar']['user']} #{node['sonar']['home']}" do
 end
 
 template "/etc/init.d/sonar" do
